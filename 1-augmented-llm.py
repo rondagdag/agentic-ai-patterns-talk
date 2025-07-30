@@ -44,7 +44,8 @@ def multiply_numbers(a: int, b: int) -> int:
 model = InferenceClientModel()
 agent = CodeAgent(
     tools=[retrieve_info, multiply_numbers],  # Using retrieval and computation tools
-    model=model  # LLM backend
+    model=model,  # LLM backend
+    add_base_tools=True
 )
 
 # Example query combining retrieval and computation

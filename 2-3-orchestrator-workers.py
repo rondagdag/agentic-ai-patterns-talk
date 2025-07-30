@@ -6,8 +6,8 @@ load_dotenv()
 model = InferenceClientModel()
 
 # Create Worker Agents
-worker_agent_1 = CodeAgent(model=model, tools=[])  # Handles first subtask
-worker_agent_2 = CodeAgent(model=model, tools=[])  # Handles second subtask
+worker_agent_1 = CodeAgent(model=model, tools=[], add_base_tools=True)  # Handles first subtask
+worker_agent_2 = CodeAgent(model=model, tools=[], add_base_tools=True)  # Handles second subtask
 
 # Define Orchestrator function
 def orchestrator(task: str) -> str:

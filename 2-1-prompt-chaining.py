@@ -17,7 +17,7 @@ def prompt_chaining_workflow(topic: str) -> str:
     Returns:
         str: The validated outline.
     """
-    agent = CodeAgent(model=model, tools=[])
+    agent = CodeAgent(model=model, tools=[], add_base_tools=True)
 
     # Step 1: Generate a blog post outline
     outline_prompt = f"Generate a structured outline for a blog post on '{topic}'."
