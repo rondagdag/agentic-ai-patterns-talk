@@ -1,7 +1,18 @@
-from smolagents import CodeAgent, InferenceClientModel, tool
-from typing import List, Callable, Dict, Any
-from dotenv import load_dotenv
-load_dotenv()
+from smolagents import CodeAgent, GradioUI, InferenceClientModel, tool
+#from typing import List, Callable, Dict, Any
+#from dotenv import load_dotenv
+#load_dotenv()
+
+from smolagents import LiteLLMModel, ToolCallingAgent
+# Import necessary modules from smolagents
+# LiteLLMModel is used for lightweight LLMs, InferenceClientModel for remote
+model = LiteLLMModel(
+    model_id="ollama/llama3.2:latest",
+    api_base="http://localhost:11434",  # Adjust if using a remote server
+    api_key="ollama"  # Replace with your API key if required
+)
+
+# model = InferenceClientModel()
 
 # Example knowledge base (dictionary format)
 knowledge_base = {
@@ -41,14 +52,14 @@ def multiply_numbers(a: int, b: int) -> int:
 
 # Initialize the Augmented Code Agent
 # Initialize the model: This model will power the agent's reasoning and code generation.
-model = InferenceClientModel()
-agent = CodeAgent(
+agent = ToolCallingAgent(
     tools=[retrieve_info, multiply_numbers],  # Using retrieval and computation tools
     model=model,  # LLM backend
-    add_base_tools=True
 )
 
-# Example query combining retrieval and computation
-response = agent.run("What is Smolagents? Also, what is 7 times 6?")
+GradioUI(agent, file_upload_folder="./data").launch()
 
-print(response)
+# Example query combining retrieval and computation
+#response = agent.run("What is Smolagents? Also, what is 7 times 6?")
+
+#print(response)

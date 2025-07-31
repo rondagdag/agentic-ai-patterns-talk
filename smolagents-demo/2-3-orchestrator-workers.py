@@ -1,9 +1,15 @@
-from smolagents import CodeAgent, InferenceClientModel, tool
+from smolagents import CodeAgent, LiteLLMModel, InferenceClientModel, tool
 from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize the LLM model
-model = InferenceClientModel()
+model = LiteLLMModel(
+    model_id="ollama_chat/llama3.2:3b",
+    api_base="http://localhost:11434",  # Adjust if using a remote server
+    api_key="ollama"  # Replace with your API key if required
+)
+
+# model = InferenceClientModel()
 
 # Create Worker Agents
 worker_agent_1 = CodeAgent(model=model, tools=[], add_base_tools=True)  # Handles first subtask

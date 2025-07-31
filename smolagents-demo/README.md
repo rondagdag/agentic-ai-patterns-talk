@@ -3,7 +3,10 @@
 ## How to Run the Code
 
 1. **Install Python dependencies**
+	You can install all required dependencies using the provided `requirements.txt` file:
 	```bash
+	pip install -r requirements.txt
+	```
 	pip install smolagents python-dotenv
 	```
 
