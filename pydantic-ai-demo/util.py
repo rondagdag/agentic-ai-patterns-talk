@@ -113,6 +113,32 @@ def initialize():
 
 
 def show(txt, title=None):
+    try:
+        # Try to use IPython display for markdown rendering
+        from IPython.display import display, Markdown
+        
+        # Always try to display as markdown in Jupyter environments
+        if title:
+            display(Markdown(f"### {title}"))
+        if txt:
+            if type(txt) == str:
+                # Check if the text contains markdown table or other markdown elements
+                if ('```markdown' in txt or 
+                    txt.strip().startswith('|') or 
+                    any(marker in txt for marker in ['# ', '## ', '### ', '**', '__', '`', '[', ']('])):
+                    # Remove markdown code block wrapper if present
+                    clean_txt = txt.replace('```markdown\n', '').replace('\n```', '').strip()
+                    display(Markdown(clean_txt))
+                else:
+                    display(Markdown(f"```\n{txt}\n```"))
+            else:
+                display(Markdown(f"```\n{pformat(txt)}\n```"))
+        return
+    except ImportError:
+        # Fall back to regular print if IPython is not available
+        pass
+    
+    # Fallback to original print-based implementation
     print()
     if title:
         print(title)
